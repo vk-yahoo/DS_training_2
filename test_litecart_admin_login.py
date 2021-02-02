@@ -1,13 +1,27 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
 
 @pytest.fixture
 def driver(request):
-    wd = webdriver.Chrome()
+    # Chrome
+    # wd = webdriver.Chrome()
+
+    # Firefox
+    # wd = webdriver.Firefox(firefox_binary="c:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe")
+
+    # Firefox 45.0.1esr
+    # wd = webdriver.Firefox(
+    #     capabilities={"marionette": False},
+    #     firefox_binary="c:\\Program Files\\Mozilla Firefox\\firefox.exe"
+    # )
+
+    # Firefox Nightly
+    wd = webdriver.Firefox(firefox_binary="c:\\Program Files\\Firefox Nightly\\firefox.exe")
+
+    # IE
+    # wd = webdriver.Ie()
+
     request.addfinalizer(wd.quit)
     return wd
 
