@@ -95,4 +95,3 @@ def test_admin_add_product(driver):
     for element in elements:
         if element.get_attribute("textContent") == product_name:
             print(element)
-
