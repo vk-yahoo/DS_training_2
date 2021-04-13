@@ -1,4 +1,7 @@
 from selenium import webdriver
+
+from pages.admin_countries_page import AdminCountriesPage
+from pages.admin_geo_zones_page import AdminGeoZonesPage
 from pages.admin_panel_login_page import AdminPanelLoginPage
 from pages.admin_panel_main_page import AdminPanelMainPage
 from pages.app_main_page import AppMainPage
@@ -15,6 +18,8 @@ class Application:
         self.admin_panel_main_page = AdminPanelMainPage(self.driver)
         self.app_main_page = AppMainPage(self.driver)
         self.customer_list_page = CustomerListPage(self.driver)
+        self.admin_countries_page = AdminCountriesPage(self.driver)
+        self.admin_geo_zones_page = AdminGeoZonesPage(self.driver)
 
     # Admin part
 
