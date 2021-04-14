@@ -1,5 +1,6 @@
 from selenium import webdriver
 
+from pages.admin_catalog_page import AdminCatalogPage
 from pages.admin_countries_page import AdminCountriesPage
 from pages.admin_geo_zones_page import AdminGeoZonesPage
 from pages.admin_panel_login_page import AdminPanelLoginPage
@@ -20,6 +21,7 @@ class Application:
         self.customer_list_page = CustomerListPage(self.driver)
         self.admin_countries_page = AdminCountriesPage(self.driver)
         self.admin_geo_zones_page = AdminGeoZonesPage(self.driver)
+        self.admin_catalog_page = AdminCatalogPage(self.driver)
 
     # Admin part
 
@@ -75,3 +77,18 @@ class Application:
             if self.app_main_page.stickers_count(product) > counter:
                 counter = self.app_main_page.stickers_count(product)
         return counter
+
+    def register_new_user(self, customer):
+        self.app_main_page.open()
+        self.app_main_page.add_user_link_click()
+        self.app_main_page.first_name_input.send_keys(customer.firstname)
+        self.app_main_page.last_name_input.send_keys(customer.lastname)
+        self.app_main_page.address_input.send_keys(customer.address)
+        self.app_main_page.postcode_input.send_keys(customer.postcode)
+        self.app_main_page.city_input.send_keys(customer.city)
+        self.app_main_page.country_input.send_keys(customer.country)
+        self.app_main_page.email_input.send_keys(customer.email)
+        self.app_main_page.phone_input.send_keys(customer.phone)
+        self.app_main_page.password_input.send_keys(customer.password)
+        self.app_main_page.confirm_password_input.send_keys(customer.password)
+        self.app_main_page.create_account_button_click()
