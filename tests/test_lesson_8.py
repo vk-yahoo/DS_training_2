@@ -1,21 +1,7 @@
 # -*- coding: utf-8 -*-
-import os
-import time
-import datetime
-
-import pytest
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
 
 
-@pytest.fixture
-def driver(request):
-    wd = webdriver.Chrome()
-    request.addfinalizer(wd.quit)
-    return wd
-
-
-def test_admin_add_product(driver):
+def test_admin_add_product(app):
     """
     Сделайте сценарий, который проверяет, что ссылки на странице редактирования страны открываются в новом окне.
 
@@ -33,27 +19,11 @@ def test_admin_add_product(driver):
     Не забудьте, что новое окно открывается не мгновенно, поэтому требуется ожидание открытия окна.
     """
     # Login to the admin
-    driver.get("http://localhost/litecart/public_html/admin")
-    driver.find_element_by_name('username').send_keys('admin')
-    driver.find_element_by_name('password').send_keys('admin')
-    driver.find_element_by_name('login').click()
+    app.login_to_admin()
 
     # Open Countries page and click on "Add New Country" button
-    driver.get('http://localhost/litecart/public_html/admin/?app=countries&doc=countries')
-    driver.find_element_by_css_selector('a.button').click()
-    main_window = driver.current_window_handle
-    internal_links = driver.find_elements_by_css_selector('#content .fa-external-link')
+    app.admin_countries_page.open_geo_zones_page()
+    app.admin_countries_page.add_new_country_button.click()
 
     # Check external links
-    for link in range(len(internal_links)):
-        internal_links[link].click()
-        available_windows = driver.window_handles
-        if available_windows[0] == main_window:
-            driver.switch_to.window(available_windows[1])
-        else:
-            driver.switch_to.window(available_windows[0])
-        driver.close()
-        driver.switch_to.window(main_window)
-
-    print('\n ')
-    print('All %s external links were opened in new window' % len(internal_links))
+    app.admin_countries_page.check_internal_links_on_add_new_country_page()

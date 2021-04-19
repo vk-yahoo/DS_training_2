@@ -23,7 +23,6 @@ def test_admin_add_product(app, product):
     Клиентскую часть магазина можно не проверять.
     """
     app.login_to_admin()
-    app.admin_catalog_page.open()
+    app.admin_catalog_page.open_geo_zones_page()
     app.admin_catalog_page.add_new_product(product)
     app.admin_catalog_page.assert_product_adding(product)
-

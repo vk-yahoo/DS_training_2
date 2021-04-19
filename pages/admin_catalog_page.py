@@ -15,6 +15,17 @@ class AdminCatalogPage:
         self.driver.get('http://localhost/litecart/public_html/admin/?app=catalog&doc=catalog')
         return self
 
+    def open_products_list(self):
+        self.driver.get('http://localhost/litecart/public_html/admin/?app=catalog&doc=catalog&category_id=1')
+        return self
+
+    def get_products_number(self):
+        return len(self.driver.find_elements_by_css_selector('[title="Edit"]'))
+
+    def open_product_by_index(self, index):
+        self.driver.find_elements_by_css_selector('[title="Edit"]')[index].click()
+        self.driver.find_element_by_css_selector('button[name="save"]')
+
     @property
     def add_new_product_button(self):
         return self.driver.find_element_by_xpath("//*[contains(text(), 'Add New Product')]")

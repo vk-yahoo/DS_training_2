@@ -21,4 +21,3 @@ def test_check_product_stickers(app):
     """
     app.open_application()
     assert app.return_max_stickers_number() == 1
-

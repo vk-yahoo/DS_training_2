@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-import pytest
-from selenium import webdriver
-
-
-@pytest.fixture
-def driver(request):
-    wd = webdriver.Chrome()
-    request.addfinalizer(wd.quit)
-    return wd
 
 
 def browser_logs(driver):
@@ -19,7 +10,7 @@ def browser_logs(driver):
         print('\nNo browser logs available')
 
 
-def test_admin_add_product(driver):
+def test_admin_add_product(app):
     """
     Сделайте сценарий, который проверяет, не появляются ли в логе браузера сообщения
     при открытии страниц в учебном приложении, а именно - страниц товаров в каталоге в административной панели.
@@ -32,23 +23,13 @@ def test_admin_add_product(driver):
     """
 
     # Login to the admin
-    driver.get("http://localhost/litecart/public_html/admin")
-    driver.find_element_by_name('username').send_keys('admin')
-    driver.find_element_by_name('password').send_keys('admin')
-    driver.find_element_by_name('login').click()
+    app.login_to_admin()
 
     # Open the Catalog page
-    driver.get('http://localhost/litecart/public_html/admin/?app=catalog&doc=catalog&category_id=1')
+    app.admin_catalog_page.open_products_list()
 
     # Open every available product page
-    products_count = len(driver.find_elements_by_css_selector('[title="Edit"]'))
-
-    for i in range(2, products_count):
-        driver.find_elements_by_css_selector('[title="Edit"]')[i].click()
-        driver.find_element_by_css_selector('button[name="save"]')
-        browser_logs(driver)
-        driver.get('http://localhost/litecart/public_html/admin/?app=catalog&doc=catalog&category_id=1')
-
-    # Logs for scoperty.de
-    driver.get('https://scoperty.de/home')
-    browser_logs(driver)
+    for i in range(2, app.admin_catalog_page.get_products_number()):
+        app.admin_catalog_page.open_product_by_index(i)
+        browser_logs(app. driver)
+        app.admin_catalog_page.open_products_list()

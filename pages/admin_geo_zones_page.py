@@ -9,16 +9,16 @@ class AdminGeoZonesPage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
-    def open(self):
+    def open_geo_zones_page(self):
         self.driver.get('http://localhost/litecart/public_html/admin/?app=geo_zones&doc=geo_zones')
         return self
 
-    def get_countries_list(self):
-        self.open()
+    def get_countries_list_on_geo_zones_page(self):
+        self.open_geo_zones_page()
         return self.driver.find_elements_by_css_selector('.row td:nth-child(3) a')
 
     def assert_geo_zones_are_sorted(self):
-        countries = self.get_countries_list()
+        countries = self.get_countries_list_on_geo_zones_page()
         for country in range(len(countries)):
             countries[country].click()
             zones_list = []
@@ -30,5 +30,5 @@ class AdminGeoZonesPage:
             zones_list_sorted.sort()
             for x in range(len(zones_list)):
                 assert zones_list[x] == zones_list_sorted[x]
-            countries = self.get_countries_list()
+            countries = self.get_countries_list_on_geo_zones_page()
         return True

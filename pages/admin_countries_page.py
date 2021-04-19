@@ -41,6 +41,7 @@ class AdminCountriesPage:
 
     def get_zones_list(self, country_row):
         self.open()
+        zones_list = []
         if country_row.find_element_by_css_selector('td:nth-child(6)').get_attribute('textContent') != '0':
             country_row.find_element_by_css_selector('td:nth-child(5) a').click()
             zones_names = self.driver.find_elements_by_css_selector('#table-zones tr td:nth-child(3)')
@@ -52,3 +53,26 @@ class AdminCountriesPage:
     @property
     def country_rows(self):
         return self.driver.find_elements_by_css_selector('.row')
+
+    @property
+    def add_new_country_button(self):
+        return self.driver.find_element_by_css_selector('a.button')
+
+    @property
+    def internal_links_on_add_new_country_page(self):
+        return self.driver.find_elements_by_css_selector('#content .fa-external-link')
+
+    def check_internal_links_on_add_new_country_page(self):
+        main_window = self.driver.current_window_handle
+        internal_links = self.internal_links_on_add_new_country_page
+        for link in range(len(internal_links)):
+            internal_links[link].click()
+            available_windows = self.driver.window_handles
+            if available_windows[0] == main_window:
+                self.driver.switch_to.window(available_windows[1])
+            else:
+                self.driver.switch_to.window(available_windows[0])
+            self.driver.close()
+            self.driver.switch_to.window(main_window)
+        print('\n ')
+        print('All %s external links were opened in new window' % len(internal_links))

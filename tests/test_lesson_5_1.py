@@ -14,15 +14,14 @@ def test_admin_sections(app):
     app.login_to_admin()
 
     # Check countries sorting
-    countries_list = app.admin_countries_page.get_countries_list()
-    countries_list_sorted = list(countries_list)
-    countries_list_sorted.sort()
-    for x in range(len(countries_list)):
-        assert countries_list[x] == countries_list_sorted[x]
-
-    # Check zones sorting on country page
-    assert app.admin_countries_page.assert_all_zones_are_sorted() is True
+    # countries_list = app.admin_countries_page.get_countries_list_on_geo_zones_page()
+    # countries_list_sorted = list(countries_list)
+    # countries_list_sorted.sort()
+    # for x in range(len(countries_list)):
+    #     assert countries_list[x] == countries_list_sorted[x]
+    #
+    # # Check zones sorting on country page
+    # assert app.admin_countries_page.assert_all_zones_are_sorted() is True
 
     # Check geo zones sorting on geo zones page
     assert app.admin_geo_zones_page.assert_geo_zones_are_sorted() is True
-

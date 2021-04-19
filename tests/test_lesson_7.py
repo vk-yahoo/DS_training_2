@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pytest
-import time
-
 
 def test_app_add_remove_products_to_the_cart(app):
     """
@@ -16,7 +13,7 @@ def test_app_add_remove_products_to_the_cart(app):
     7. Удалить все товары из корзины один за другим, после каждого удаления подождать, пока внизу обновится таблица
     """
 
-    app.app_main_page.open()
+    app.app_main_page.open_geo_zones_page()
 
     # Add products to a cart
     app.app_main_page.add_products_to_the_cart(3)
@@ -25,5 +22,5 @@ def test_app_add_remove_products_to_the_cart(app):
     # Remove products from the cart
     app.app_main_page.remove_products_from_the_cart()
 
-    app.app_main_page.open()
+    app.app_main_page.open_geo_zones_page()
     assert app.app_main_page.get_cart_products_number() == '0'
